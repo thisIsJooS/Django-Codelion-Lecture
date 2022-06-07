@@ -46,8 +46,8 @@ def formcreate(request):
 def modelformcreate(request):
     if request.method == 'GET':
         form = BlogModelForm()
-    elif request.method == 'POST':
-        form = BlogModelForm(request.POST)
+    elif request.method == 'POST' or request.method == 'FILES':
+        form = BlogModelForm(request.POST, request.FILES)
         if form.is_valid(): # 폼 데이터를 자동으로 유효성 검사를 해줌
             form.save()
             return redirect('home')
