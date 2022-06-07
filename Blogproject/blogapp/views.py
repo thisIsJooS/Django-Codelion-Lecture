@@ -4,6 +4,8 @@ from django.utils import timezone
 from .forms import BlogForm, BlogModelForm
 
 def home(request):
+    # posts = Blog.objects.all()
+    posts = Blog.objects.filter().order_by('-date')
     return render(request, 'index.html', {'posts': posts})
 
 

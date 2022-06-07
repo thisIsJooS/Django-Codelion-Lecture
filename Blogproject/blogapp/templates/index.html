@@ -1,7 +1,17 @@
 <h1>짱구야 놀자</h1>
 
 <!-- 블로그 글 리스트 시작-->
-
+{% for post in posts %}
+  <h2>
+    {{post.title}}
+    -
+    {{post.date}}
+  </h2>
+  <h4>
+    {{post.body}}
+  </h4>
+  <hr>
+{% endfor %}
 <!-- 블로그 글 리스트 끝 -->
 
 <a href="{% url 'new' %}">HTML을 이용한 새 글 작성</a>
