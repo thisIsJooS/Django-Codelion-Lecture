@@ -23,4 +23,5 @@ urlpatterns = [
     path('new/', views.new, name='new'),
     path('create/', views.create, name='create'),
     path('formcreate/', views.formcreate, name='formcreate'),
+    path('modelformcreate/', views.modelformcreate, name='modelformcreate'),
 ]

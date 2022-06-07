@@ -1,14 +1,16 @@
 from django.shortcuts import render, redirect
 from .models import Blog
 from django.utils import timezone
-from .forms import BlogForm
+from .forms import BlogForm, BlogModelForm
 
 def home(request):
-    return render(request, 'index.html')
+    return render(request, 'index.html', {'posts': posts})
+
 
 # 블로그 글 작성 
 def new(request):
     return render(request, 'new.html')
+
 
 # 블로그 글 저장
 def create(request):
@@ -38,3 +40,13 @@ def formcreate(request):
             return redirect('home')
     return render(request, 'form_create.html', {'form': form})
         
+        
+def modelformcreate(request):
+    if request.method == 'GET':
+        form = BlogModelForm()
+    elif request.method == 'POST':
+        form = BlogModelForm(request.POST)
+        if form.is_valid(): # 폼 데이터를 자동으로 유효성 검사를 해줌
+            form.save()
+            return redirect('home')
+    return render(request, 'form_create.html', {'form': form})
