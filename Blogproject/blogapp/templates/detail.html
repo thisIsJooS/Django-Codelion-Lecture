@@ -10,3 +10,15 @@
 {% if blog_detail.photo %}
   <img src="{{ blog_detail.photo.url }}" alt="">
 {% endif %}
+
+<h3>댓글</h3>
+<form action="{% url 'create_comment' blog_detail.id %}" method="POST">
+  {% csrf_token %}
+  {{ comment_form }}
+  <input type="submit">
+</form>
+
+{% for comment in blog_detail.comment_set.all %}
+  <p>{{ comment }}</p>
+  <hr>
+{% endfor %}

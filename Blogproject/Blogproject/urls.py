@@ -18,6 +18,7 @@ from django.urls import path
 from blogapp import views
 from django.conf.urls.static import static
 from django.conf import settings
+from accounts import views as accounts_views
 
 urlpatterns = [
     path('admin/', admin.site.urls),
@@ -27,6 +28,11 @@ urlpatterns = [
     path('formcreate/', views.formcreate, name='formcreate'),
     path('modelformcreate/', views.modelformcreate, name='modelformcreate'),
     path('detail/<int:post_id>/', views.detail, name="detail"),
+    path('create_comment/<int:post_id>', views.create_comment, name='create_comment'),
+    path('login', accounts_views.login, name='login'),
+    path('logout', accounts_views.logout, name='logout'),
+    path('signup', accounts_views.signup, name='signup'),
+    
 ]
 
 urlpatterns += static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)

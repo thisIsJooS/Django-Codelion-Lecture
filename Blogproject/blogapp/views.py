@@ -1,7 +1,7 @@
 from django.shortcuts import render, redirect, get_object_or_404
-from .models import Blog
+from .models import Blog, Comment
 from django.utils import timezone
-from .forms import BlogForm, BlogModelForm
+from .forms import BlogForm, BlogModelForm, CommentForm
 
 def home(request):
     # posts = Blog.objects.all()
@@ -56,4 +56,20 @@ def modelformcreate(request):
 
 def detail(request, post_id):
     blog_detail = get_object_or_404(Blog, pk=post_id)
-    return render(request, 'detail.html', {'blog_detail':blog_detail})
+    
+    comment_form = CommentForm()
+    return render(request, 'detail.html', {'blog_detail':blog_detail, 'comment_form': comment_form})
+
+
+def create_comment(request, post_id):
+    if request.method == 'GET':
+        pass
+    elif request.method == 'POST':
+        filled_form = CommentForm(request.POST)
+        if filled_form.is_valid():
+            finished_form = filled_form.save(commit=False) # 아직은 저장하지 말고 대기하고 있어라
+            finished_form.post = get_object_or_404(Blog, pk=post_id)
+            finished_form.save()
+            
+    return redirect('detail', post_id)
+            
