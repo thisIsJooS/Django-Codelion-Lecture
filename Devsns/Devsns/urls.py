@@ -1,5 +1,5 @@
 from django.contrib import admin
-from django.urls import path
+from django.urls import include, path
 from snsapp import views as snsappViews
 from accounts import views as accountsViews
 
@@ -16,4 +16,6 @@ urlpatterns = [
     path('freedetail/<int:post_id>', snsappViews.freedetail, name='freedetail'),
     path('new_freecomment/<int:post_id>', snsappViews.new_freecomment, name='new_freecomment'),
     path('signup/', accountsViews.signup, name='signup'),
+    
+    path('accounts/', include('allauth.urls')),
 ]
