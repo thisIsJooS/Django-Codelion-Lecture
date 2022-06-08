@@ -1,11 +1,18 @@
 from django.shortcuts import render, redirect, get_object_or_404
 from .forms import PostForm, CommentForm, FreeCommentForm, FreePostForm
 from .models import Post, FreePost
+from django.core.paginator import Paginator
+
 
 def home(request):
     # posts = Post.objects.all()
     posts = Post.objects.filter().order_by('-date')
+    paginator = Paginator(posts, 5)
+    pagenum = request.GET.get('page') # url 주소 상의 쿼리문
+    posts = paginator.get_page(pagenum)
+    
     return render(request, 'index.html', {'posts':posts})
+
 
 def postcreate(request):
     if request.method == 'POST' or request.method == 'FILES':
@@ -17,10 +24,12 @@ def postcreate(request):
         form = PostForm()
     return render(request, 'post_form.html', {'form':form})
 
+
 def detail(request, post_id):
     post_detail = get_object_or_404(Post, pk=post_id)
     comment_form = CommentForm()
     return render(request, 'detail.html', {'post_detail':post_detail, 'comment_form': comment_form})
+
 
 # 댓글 저장
 def new_comment(request, post_id):
